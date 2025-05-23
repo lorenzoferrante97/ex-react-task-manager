@@ -10,11 +10,11 @@ const ApiProvider = ({ children }) => {
 
   // get tasks
   const getTasks = useCallback(async () => {
-    const tasks = await fetch(`${fetchPath}/tasks`);
-    if (!tasks.ok) {
+    const fetchedtasks = await fetch(`${fetchPath}/tasks`);
+    if (!fetchedtasks.ok) {
       throw new Error('Failed to fetch! Check the fetch...');
     } else {
-      const tasksJson = await tasks;
+      const tasksJson = await fetchedtasks.json();
       return tasksJson;
     }
   }, []);

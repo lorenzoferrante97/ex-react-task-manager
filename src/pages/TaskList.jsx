@@ -1,5 +1,6 @@
 import { useApiContext } from '../context/ApiContext';
 import { useEffect } from 'react';
+import List from '../components/List';
 
 export default function TaskList() {
   const { tasks, setTasks, getTasks } = useApiContext();
@@ -18,13 +19,7 @@ export default function TaskList() {
   return (
     <>
       <h1 className="text-4xl font-bold text-center">Task List</h1>
-      {/* <ul>
-        {tasks?.map((task) => {
-          const { title, id } = task;
-
-          return <li key={id}>{title}</li>;
-        })}
-      </ul> */}
+      {tasks?.length != 0 ? <List tasks={tasks} /> : <p>No Tasks</p>}
     </>
   );
 }
