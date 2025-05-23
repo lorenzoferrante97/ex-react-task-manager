@@ -10,8 +10,13 @@ const ApiProvider = ({ children }) => {
 
   // get tasks
   const getTasks = useCallback(async () => {
-    const tasks = await (await fetch(`${fetchPath}/tasks`)).json();
-    return tasks;
+    const tasks = await fetch(`${fetchPath}/tasks`);
+    if (!tasks.ok) {
+      throw new Error('Failed to fetch! Check the fetch...');
+    } else {
+      const tasksJson = await tasks;
+      return tasksJson;
+    }
   }, []);
 
   const value = { tasks, setTasks, getTasks };

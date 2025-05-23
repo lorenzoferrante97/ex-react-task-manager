@@ -6,8 +6,12 @@ export default function TaskList() {
 
   useEffect(() => {
     (async () => {
-      const tasksRes = await getTasks();
-      setTasks(tasksRes);
+      try {
+        const tasksRes = await getTasks();
+        setTasks(tasksRes);
+      } catch (err) {
+        console.error(err);
+      }
     })();
   }, []);
 
