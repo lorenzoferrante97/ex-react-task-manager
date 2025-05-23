@@ -1,0 +1,24 @@
+import { createContext, useContext, useState, useCallback } from 'react';
+const ApiContext = createContext();
+
+const ApiProvider = ({ children }) => {
+  // env variables
+  const fetchPath = import.meta.env.VITE_API_URL;
+
+  // list of tasks
+  const [tasks, setTasks] = useState([]);
+
+  // get tasks
+  const getTasks = useCallback(async () => {
+    const tasks = await (await fetch(`${fetchPath}/tasks`)).json();
+    return tasks;
+  }, []);
+
+  const value = { tasks, setTasks, getTasks };
+
+  return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
+};
+
+const useApiContext = () => useContext(ApiContext);
+
+export { ApiProvider, useApiContext };
