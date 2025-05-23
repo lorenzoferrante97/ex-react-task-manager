@@ -1,7 +1,7 @@
 export default function AddTask() {
   return (
-    <main>
-      <h1>Add Task</h1>
-    </main>
+    <>
+      <h1 className="text-4xl font-bold text-center">Add Task</h1>
+    </>
   );
 }

@@ -1,12 +1,12 @@
-import { createContext, useContext, useState, useCallback, useRef } from 'react';
-const GlobalContext = createContext();
+import { createContext, useContext } from 'react';
+const ApiContext = createContext();
 
-const GlobalProvider = ({ children }) => {
+const ApiProvider = ({ children }) => {
   const value = {};
 
-  return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>;
+  return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };
 
-const useGlobalContext = () => useContext(GlobalContext);
+const useApiContext = () => useContext(ApiContext);
 
-export { GlobalProvider, useGlobalContext };
+export { ApiProvider, useApiContext };
