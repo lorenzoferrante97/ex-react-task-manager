@@ -15,8 +15,7 @@ export default function AddTask() {
           <div className="flex flex-col w-full gap-2">
             <label htmlFor="taskDesc">Seleziona stato Task</label>
             <div className="flex flex-wrap justify-between">
-              <select name="taskStatus" className="w-fit min-w-60 bg-white rounded-lg min-h-12 px-4 py-1 border border-neutral-200/50 focus-visible:outline-2 focus-visible:outline-neutral-700 shadow-sm shadow-black/5">
-                <option value="default">Scegli...</option>
+              <select defaultValue="todo" name="taskStatus" className="w-fit min-w-60 bg-white rounded-lg min-h-12 px-4 py-1 border border-neutral-200/50 focus-visible:outline-2 focus-visible:outline-neutral-700 shadow-sm shadow-black/5">
                 <option value="todo">To do</option>
                 <option value="doing">Doing</option>
                 <option value="done">Done</option>
