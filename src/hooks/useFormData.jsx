@@ -2,8 +2,10 @@ import { useState, useRef } from 'react';
 
 export default function useFormData() {
   const [formTitle, setFormTitle] = useState('');
-  const formDesc = useRef('');
-  const formStatus = useRef('');
+  const formDesc = useRef();
+  const formStatus = useRef();
 
-  return [];
+  const handleTitle = (e) => setFormTitle(e.target.value);
+
+  return [formTitle, formDesc, formStatus, handleTitle];
 }
