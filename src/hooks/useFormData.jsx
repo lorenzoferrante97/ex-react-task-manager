@@ -9,12 +9,12 @@ export default function useFormData() {
 
   const handleSubmit = (e, data) => {
     e.preventDefault();
-    const dataValues = {
+    const newTask = {
       title: data.formTitle,
-      desc: formDesc.current.value,
+      description: formDesc.current.value,
       status: formStatus.current.value,
     };
-    console.log(dataValues);
+    console.log(newTask);
   };
 
   return [formTitle, formDesc, formStatus, handleTitle, handleSubmit];
