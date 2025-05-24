@@ -1,4 +1,6 @@
-export default function TaskRow({ task }) {
+import { memo } from 'react';
+
+export default memo(function TaskRow({ task }) {
   const { title, status, createdAt } = task;
   const createdDate = new Date(createdAt).toLocaleString();
 
@@ -17,4 +19,4 @@ export default function TaskRow({ task }) {
       </div>
     </>
   );
-}
+});
