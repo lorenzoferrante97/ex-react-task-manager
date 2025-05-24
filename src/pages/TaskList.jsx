@@ -1,10 +1,9 @@
 import { useApiContext } from '../context/ApiContext';
 import { useEffect } from 'react';
 import List from '../components/List';
-import useTasks from '../hooks/useTasks';
 
 export default function TaskList() {
-  // const { tasks, setTasks, getTasks } = useApiContext();
+  const { tasks } = useApiContext();
 
   // useEffect(() => {
   //   (async () => {
@@ -16,8 +15,6 @@ export default function TaskList() {
   //     }
   //   })();
   // }, []);
-
-  const tasks = useTasks();
 
   return (
     <>

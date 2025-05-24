@@ -38,5 +38,5 @@ export default function useTasks() {
   // update tasks
   const updateTasks = () => {};
 
-  return tasks;
+  return [tasks, addTasks, removeTasks, updateTasks];
 }
