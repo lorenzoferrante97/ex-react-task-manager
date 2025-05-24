@@ -11,9 +11,9 @@ export default function TaskRow({ task }) {
   return (
     <>
       <div className="col-span-full grid grid-cols-subgrid gap-x-2 rounded-lg">
-        <div className="col-span-4 p-2 bg-white rounded-lg">{title}</div>
-        <div className={`col-span-4 p-2 rounded-lg ${status == 'To do' ? statusStyles.todo : status == 'Doing' ? statusStyles.doing : statusStyles.done}`}>{status}</div>
-        <div className="col-span-4 p-2 bg-white rounded-lg">{createdDate}</div>
+        <div className="col-span-7 p-2 bg-white rounded-lg">{title}</div>
+        <div className={`col-span-2 p-2 rounded-lg ${status == 'To do' ? statusStyles.todo : status == 'Doing' ? statusStyles.doing : statusStyles.done}`}>{status}</div>
+        <div className="col-span-3 p-2 bg-white rounded-lg">{createdDate}</div>
       </div>
     </>
   );

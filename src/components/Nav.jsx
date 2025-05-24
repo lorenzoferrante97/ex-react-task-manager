@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom';
 
 export default function Nav() {
   const navStyles = {
-    active: 'bg-white text-blue-600',
-    default: 'py-2 px-4 rounded-full hover:bg-white hover:cursor-pointer font-semibold',
+    active: 'bg-white shadow-md border border-neutral-200/60 shadow-black/5 text-neutral-900',
+    default: 'py-2 px-4 rounded-full hover:bg-white hover:cursor-pointer font-semibold text-neutral-500',
   };
 
   return (
