@@ -1,7 +1,12 @@
 import useFormData from '../hooks/useFormData';
+import useValidation from '../hooks/useValidation';
 
 export default function AddTask() {
   const [formTitle, formDesc, formStatus, handleTitle] = useFormData();
+  const [validateTitle, errorMessages] = useValidation();
+  console.log('errorMessages: ', errorMessages);
+
+  const formData = { formTitle, formDesc, formStatus };
 
   return (
     <>
@@ -16,8 +21,11 @@ export default function AddTask() {
               name="taskTitle"
               placeholder="Fare la spesa"
               value={formTitle}
-              onChange={(e) => handleTitle(e)}
+              onChange={(e) => {
+                handleTitle(e), validateTitle(e.target.value);
+              }}
             />
+            {errorMessages.titleErr.length != 0 && <div className="px-4 py-2 rounded-sm bg-red-200 text-red-700">{errorMessages.titleErr}</div>}
           </div>
           <div className="flex flex-col w-full gap-2">
             <label htmlFor="taskDesc">Descrizione della Task</label>
