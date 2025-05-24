@@ -7,5 +7,15 @@ export default function useFormData() {
 
   const handleTitle = (e) => setFormTitle(e.target.value);
 
-  return [formTitle, formDesc, formStatus, handleTitle];
+  const handleSubmit = (e, data) => {
+    e.preventDefault();
+    const dataValues = {
+      title: data.formTitle,
+      desc: formDesc.current.value,
+      status: formStatus.current.value,
+    };
+    console.log(dataValues);
+  };
+
+  return [formTitle, formDesc, formStatus, handleTitle, handleSubmit];
 }

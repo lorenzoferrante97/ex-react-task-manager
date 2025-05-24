@@ -2,17 +2,15 @@ import useFormData from '../hooks/useFormData';
 import useValidation from '../hooks/useValidation';
 
 export default function AddTask() {
-  const [formTitle, formDesc, formStatus, handleTitle] = useFormData();
+  const [formTitle, formDesc, formStatus, handleTitle, handleSubmit] = useFormData();
   const [validateTitle, errorMessages] = useValidation();
-  console.log('errorMessages: ', errorMessages);
 
   const formData = { formTitle, formDesc, formStatus };
-
   return (
     <>
       <h1 className="text-4xl font-bold text-center">Add Task</h1>
       <div className="w-full bg-neutral-100 px-3 py-8 flex justify-center items-center rounded-2xl">
-        <form className="w-[60%] min-w-[480px] flex flex-col gap-4">
+        <form className="w-[60%] min-w-[480px] flex flex-col gap-4" onSubmit={(e) => handleSubmit(e, formData)}>
           <div className="flex flex-col w-full gap-2">
             <label htmlFor="taskTitle">Titolo della Task</label>
             <input
