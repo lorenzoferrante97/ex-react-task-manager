@@ -1,8 +1,9 @@
 import useFormData from '../hooks/useFormData';
 import useValidation from '../hooks/useValidation';
+import Portal from '../components/Portal';
 
 export default function AddTask() {
-  const [formTitle, formDesc, formStatus, handleTitle, handleSubmit] = useFormData();
+  const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit] = useFormData();
   const [validateTitle, errorMessages] = useValidation();
 
   const formData = { formTitle, formDesc, formStatus };
@@ -43,6 +44,26 @@ export default function AddTask() {
             </div>
           </div>
         </form>
+        {console.log('isNewTaskAdded: ', isNewTaskAdded)}
+        {isNewTaskAdded && (
+          <Portal domElement="#root">
+            <div id="addTaskPortal" className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black/40">
+              <div className="bg-white border border-neutral-200 rounded-lg shadow-xl shadow-black/20 p-6 flex flex-col gap-2">
+                <p>Task aggiunto con successo!</p>
+
+                <button
+                  onClick={() => {
+                    const portal = document.querySelector('#addTaskPortal');
+                    portal.classList.add('hidden');
+                  }}
+                  className="bg-red-200 text-red-700 px-4 py-2 rounded-sm"
+                >
+                  Chiudi Task
+                </button>
+              </div>
+            </div>
+          </Portal>
+        )}
       </div>
     </>
   );

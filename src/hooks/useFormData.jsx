@@ -6,6 +6,8 @@ export default function useFormData() {
   const formDesc = useRef();
   const formStatus = useRef();
 
+  const [isNewTaskAdded, setIsNewTaskAdded] = useState(false);
+
   const { addTasks } = useApiContext();
 
   const handleTitle = (e) => setFormTitle(e.target.value);
@@ -22,13 +24,12 @@ export default function useFormData() {
     (async () => {
       try {
         const taskRes = await addTasks(newTask);
-        console.log('task aggiunta: ', taskRes);
-        // setTasks([...tasks, taskRes.task]);
+        taskRes ? setIsNewTaskAdded(true) : setIsNewTaskAdded(false);
       } catch (err) {
         console.error(err);
       }
     })();
   };
 
-  return [formTitle, formDesc, formStatus, handleTitle, handleSubmit];
+  return [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit];
 }
