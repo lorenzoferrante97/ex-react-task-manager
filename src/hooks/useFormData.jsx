@@ -31,5 +31,11 @@ export default function useFormData() {
     })();
   };
 
-  return [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit];
+  const resetForm = () => {
+    setFormTitle('');
+    formDesc.current.value = '';
+    formStatus.current.value = 'To do';
+  };
+
+  return [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded];
 }

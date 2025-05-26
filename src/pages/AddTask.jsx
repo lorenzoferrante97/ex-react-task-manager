@@ -1,17 +1,23 @@
 import useFormData from '../hooks/useFormData';
 import useValidation from '../hooks/useValidation';
 import Portal from '../components/Portal';
+import { useApiContext } from '../context/ApiContext';
 
 export default function AddTask() {
-  const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit] = useFormData();
+  const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded] = useFormData();
   const [validateTitle, errorMessages] = useValidation();
-
   const formData = { formTitle, formDesc, formStatus };
+
   return (
     <>
       <h1 className="text-4xl font-bold text-center">Add Task</h1>
       <div className="w-full bg-neutral-100 px-3 py-8 flex justify-center items-center rounded-2xl">
-        <form className="w-[60%] min-w-[480px] flex flex-col gap-4" onSubmit={(e) => handleSubmit(e, formData)}>
+        <form
+          className="w-[60%] min-w-[480px] flex flex-col gap-4"
+          onSubmit={(e) => {
+            handleSubmit(e, formData), resetForm();
+          }}
+        >
           <div className="flex flex-col w-full gap-2">
             <label htmlFor="taskTitle">Titolo della Task</label>
             <input
@@ -44,17 +50,16 @@ export default function AddTask() {
             </div>
           </div>
         </form>
-        {console.log('isNewTaskAdded: ', isNewTaskAdded)}
+
         {isNewTaskAdded && (
           <Portal domElement="#root">
-            <div id="addTaskPortal" className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black/40">
+            <div id="addTaskPortal" className={`${isNewTaskAdded ? 'flex' : 'hidden'} fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/40`}>
               <div className="bg-white border border-neutral-200 rounded-lg shadow-xl shadow-black/20 p-6 flex flex-col gap-2">
                 <p>Task aggiunto con successo!</p>
 
                 <button
                   onClick={() => {
-                    const portal = document.querySelector('#addTaskPortal');
-                    portal.classList.add('hidden');
+                    setIsNewTaskAdded(false);
                   }}
                   className="bg-red-200 text-red-700 px-4 py-2 rounded-sm"
                 >
