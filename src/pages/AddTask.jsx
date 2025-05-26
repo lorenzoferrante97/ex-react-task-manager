@@ -32,10 +32,10 @@ export default function AddTask() {
           <div className="flex flex-col w-full gap-2">
             <label htmlFor="taskDesc">Seleziona stato Task</label>
             <div className="flex flex-wrap justify-between">
-              <select ref={formStatus} defaultValue="todo" name="taskStatus" className="w-fit min-w-60 bg-white rounded-lg min-h-12 px-4 py-1 border border-neutral-200/50 focus-visible:outline-2 focus-visible:outline-neutral-700 shadow-sm shadow-black/5">
-                <option value="todo">To do</option>
-                <option value="doing">Doing</option>
-                <option value="done">Done</option>
+              <select ref={formStatus} defaultValue="To do" name="taskStatus" className="w-fit min-w-60 bg-white rounded-lg min-h-12 px-4 py-1 border border-neutral-200/50 focus-visible:outline-2 focus-visible:outline-neutral-700 shadow-sm shadow-black/5">
+                <option value="To do">To do</option>
+                <option value="Doing">Doing</option>
+                <option value="Done">Done</option>
               </select>
               <button className="bg-black text-white rounded-full px-6 py-4 font-semibold hover:scale-110 transition duration-300 ease-in-out cursor-pointer hover:shadow-xl" type="submit">
                 Aggiungi Task
