@@ -1,12 +1,14 @@
 import useFormData from '../hooks/useFormData';
 import useValidation from '../hooks/useValidation';
-import Portal from '../components/Portal';
-import { useApiContext } from '../context/ApiContext';
+import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
 
 export default function AddTask() {
   const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded] = useFormData();
   const [validateTitle, errorMessages] = useValidation();
   const formData = { formTitle, formDesc, formStatus };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -51,7 +53,7 @@ export default function AddTask() {
           </div>
         </form>
 
-        {isNewTaskAdded.success && (
+        {/* {isNewTaskAdded.success && (
           <Portal domElement="#root">
             <div id="addTaskPortal" className={`${isNewTaskAdded.success ? 'flex' : 'hidden'} fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/40`}>
               <div className="bg-white border border-neutral-200 rounded-lg shadow-xl shadow-black/20 p-6 flex flex-col gap-2">
@@ -68,8 +70,8 @@ export default function AddTask() {
               </div>
             </div>
           </Portal>
-        )}
-        {isNewTaskAdded.success == false && (
+        )} */}
+        {/* {isNewTaskAdded.success == false && (
           <Portal domElement="#root">
             <div id="addTaskPortalError" className={`${isNewTaskAdded.success == false && isNewTaskAdded.error.length > 0 ? 'flex' : 'hidden'} fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/40`}>
               <div className="bg-white border border-neutral-200 rounded-lg shadow-xl shadow-black/20 p-6 flex flex-col gap-2">
@@ -86,7 +88,17 @@ export default function AddTask() {
               </div>
             </div>
           </Portal>
-        )}
+        )} */}
+        <Modal
+          id="removedTaskPortal"
+          show={isNewTaskAdded.success || isNewTaskAdded.error.length > 0}
+          title={isNewTaskAdded.success ? 'Task aggiunta' : 'Errore di aggiunta task'}
+          content={isNewTaskAdded.error}
+          confirmText="Torna alle task"
+          closeText="Torna alla pagina"
+          onConfirm={() => navigate('/')}
+          onClose={() => setIsNewTaskAdded({ ...isNewTaskAdded, success: false, error: '' })}
+        />
       </div>
     </>
   );
