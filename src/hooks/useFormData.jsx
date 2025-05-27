@@ -6,7 +6,10 @@ export default function useFormData() {
   const formDesc = useRef();
   const formStatus = useRef();
 
-  const [isNewTaskAdded, setIsNewTaskAdded] = useState(false);
+  const [isNewTaskAdded, setIsNewTaskAdded] = useState({
+    success: false,
+    error: '',
+  });
 
   const { addTasks } = useApiContext();
 
@@ -24,9 +27,14 @@ export default function useFormData() {
     (async () => {
       try {
         const taskRes = await addTasks(newTask);
-        taskRes ? setIsNewTaskAdded(true) : setIsNewTaskAdded(false);
+        taskRes ? setIsNewTaskAdded({ ...isNewTaskAdded, success: true }) : setIsNewTaskAdded({ ...isNewTaskAdded, success: false });
       } catch (err) {
         console.error(err);
+        let errorString = '';
+        err.message.includes('title') && (errorString = 'errore nel titolo, assicurati che sia compilato correttamente');
+        err.message.includes('description') && (errorString = 'errore nella descrizione, assicurati che sia compilata correttamente');
+        err.message.includes('status') && (errorString = "errore nello status, assicurati che sia un valore tra 'To do', 'Doing' o 'Done'");
+        setIsNewTaskAdded({ ...isNewTaskAdded, success: false, error: errorString });
       }
     })();
   };

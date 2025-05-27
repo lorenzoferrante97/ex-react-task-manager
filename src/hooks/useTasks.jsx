@@ -31,7 +31,7 @@ export default function useTasks() {
 
   // add tasks
   const addTasks = async (newTask) => {
-    console.log('newTask: ', newTask);
+    // console.log('newTask: ', newTask);
     const fetchTask = await fetch(`${fetchPath}/tasks`, {
       method: 'POST',
       headers: {

@@ -51,17 +51,35 @@ export default function AddTask() {
           </div>
         </form>
 
-        {isNewTaskAdded && (
+        {isNewTaskAdded.success && (
           <Portal domElement="#root">
-            <div id="addTaskPortal" className={`${isNewTaskAdded ? 'flex' : 'hidden'} fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/40`}>
+            <div id="addTaskPortal" className={`${isNewTaskAdded.success ? 'flex' : 'hidden'} fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/40`}>
               <div className="bg-white border border-neutral-200 rounded-lg shadow-xl shadow-black/20 p-6 flex flex-col gap-2">
                 <p>Task aggiunto con successo!</p>
 
                 <button
                   onClick={() => {
-                    setIsNewTaskAdded(false);
+                    setIsNewTaskAdded({ ...isNewTaskAdded, success: false });
                   }}
-                  className="bg-red-200 text-red-700 px-4 py-2 rounded-sm"
+                  className="bg-red-200 text-red-700 px-4 py-2 rounded-sm hover:cursor-pointer"
+                >
+                  Chiudi Task
+                </button>
+              </div>
+            </div>
+          </Portal>
+        )}
+        {isNewTaskAdded.success == false && (
+          <Portal domElement="#root">
+            <div id="addTaskPortalError" className={`${isNewTaskAdded.success == false && isNewTaskAdded.error.length > 0 ? 'flex' : 'hidden'} fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/40`}>
+              <div className="bg-white border border-neutral-200 rounded-lg shadow-xl shadow-black/20 p-6 flex flex-col gap-2">
+                <p>{isNewTaskAdded.error}</p>
+
+                <button
+                  onClick={() => {
+                    setIsNewTaskAdded({ ...isNewTaskAdded, success: false, error: '' });
+                  }}
+                  className="bg-red-200 text-red-700 px-4 py-2 rounded-sm hover:cursor-pointer"
                 >
                   Chiudi Task
                 </button>
