@@ -5,17 +5,6 @@ import List from '../components/List';
 export default function TaskList() {
   const { tasks } = useApiContext();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const tasksRes = await getTasks();
-  //       setTasks(tasksRes);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   })();
-  // }, []);
-
   return (
     <>
       <h1 className="text-4xl font-bold text-center">Task List</h1>

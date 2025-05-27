@@ -4,9 +4,9 @@ import useTasks from '../hooks/useTasks';
 
 const ApiProvider = ({ children }) => {
   // use tasks
-  const [tasks, addTasks, removeTasks, updateTasks] = useTasks();
+  const [tasks, isTaskDeleted, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted] = useTasks();
 
-  const value = { tasks, addTasks };
+  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };

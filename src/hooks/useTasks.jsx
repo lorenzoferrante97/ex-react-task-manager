@@ -7,6 +7,12 @@ export default function useTasks() {
   // list of tasks
   const [tasks, setTasks] = useState([]);
 
+  // is task deleted
+  const [isTaskDeleted, setIsTaskDeleted] = useState({
+    success: false,
+    message: '',
+  });
+
   // get tasks
   const getTasks = useCallback(async () => {
     const fetchedtasks = await fetch(`${fetchPath}/tasks`);
@@ -52,10 +58,28 @@ export default function useTasks() {
   };
 
   // remove tasks
-  const removeTasks = () => {};
+  const removeTasks = async (taskId) => {
+    const fetchTask = await fetch(`${fetchPath}/tasks/${taskId}`, {
+      method: 'DELETE',
+    });
+    const fetchedTask = await fetchTask.json();
+
+    let tempTasks = [...tasks];
+
+    switch (fetchedTask.success) {
+      case false:
+        setIsTaskDeleted({ ...isTaskDeleted, success: false, message: fetchedTask.message });
+        throw new Error(fetchedTask.message);
+      case true:
+        tempTasks = tempTasks.filter((task) => task.id != taskId);
+        setTasks(tempTasks);
+        setIsTaskDeleted({ ...isTaskDeleted, success: true, message: 'Task eliminato correttamente' });
+        break;
+    }
+  };
 
   // update tasks
   const updateTasks = () => {};
 
-  return [tasks, addTasks, removeTasks, updateTasks, setTasks];
+  return [tasks, isTaskDeleted, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted];
 }
