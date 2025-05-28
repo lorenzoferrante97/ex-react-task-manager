@@ -13,6 +13,12 @@ export default function useTasks() {
     message: '',
   });
 
+  // is task updated
+  const [isTaskUpdated, setIsTaskUpdated] = useState({
+    success: false,
+    message: '',
+  });
+
   // get tasks
   const getTasks = useCallback(async () => {
     const fetchedtasks = await fetch(`${fetchPath}/tasks`);
@@ -79,7 +85,33 @@ export default function useTasks() {
   };
 
   // update tasks
-  const updateTasks = () => {};
+  const updateTasks = async (updatedTask) => {
+    const { taskId } = updateTasks;
+
+    const fetchTask = await fetch(`${fetchPath}/tasks/${taskId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateTasks),
+    });
+
+    const fetchedTask = await fetchTask.json();
+
+    let tempTasks = [...tasks];
+
+    switch (fetchedTask.success) {
+      case true:
+        tempTasks = tempTasks.filter((task) => task.id != fetchedTask.task.id);
+        setTasks([...tempTasks, fetchedTask.task]);
+        setIsTaskUpdated({ ...isTaskUpdated, success: true, message: 'Task aggiornato correttamente' });
+        break;
+
+      case false:
+        setIsTaskUpdated({ ...isTaskUpdated, success: false, message: fetchedTask.message });
+        throw new Error(fetchedTask.message);
+    }
+  };
 
   return [tasks, isTaskDeleted, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted];
 }
