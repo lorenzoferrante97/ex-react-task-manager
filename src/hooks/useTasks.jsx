@@ -118,5 +118,5 @@ export default function useTasks() {
     }
   };
 
-  return [tasks, isTaskDeleted, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted];
+  return [tasks, isTaskDeleted, isTaskUpdated, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted, setIsTaskUpdated];
 }

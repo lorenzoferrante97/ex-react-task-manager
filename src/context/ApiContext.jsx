@@ -5,7 +5,7 @@ import useFormData from '../hooks/useFormData';
 
 const ApiProvider = ({ children }) => {
   // use tasks
-  const [tasks, isTaskDeleted, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted] = useTasks();
+  const [tasks, isTaskDeleted, isTaskUpdated, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted, setIsTaskUpdated] = useTasks();
 
   // use formdata
   const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus] = useFormData();
@@ -18,7 +18,7 @@ const ApiProvider = ({ children }) => {
     setIsModalOpened(!isModalOpened);
   };
 
-  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks, updateTasks, activeModalId, isModalOpened, toggleModal, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus };
+  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks, updateTasks, activeModalId, isModalOpened, toggleModal, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus, isTaskUpdated, setIsTaskUpdated };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };

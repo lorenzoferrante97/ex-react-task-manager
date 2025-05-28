@@ -9,7 +9,7 @@ export default function TaskDetail() {
 
   const navigate = useNavigate();
 
-  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal, activeModalId, setEditTitle, setEditDesc, setEditStatus, updateTasks, editTitle, editDesc, editStatus } = useApiContext();
+  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal, activeModalId, setEditTitle, setEditDesc, setEditStatus, updateTasks, editTitle, editDesc, editStatus, isTaskUpdated, setIsTaskUpdated } = useApiContext();
   const activeTask = tasks.find((task) => task.id == taskId);
 
   // useEffect(() => {
@@ -76,6 +76,17 @@ export default function TaskDetail() {
               </div>
             </div>
           </div>
+          <Modal
+            id="updatedTaskPortal"
+            show={isTaskUpdated.success || isTaskUpdated.message.length > 0}
+            title={isTaskUpdated.success ? 'Task aggiornata' : 'Errore aggiornamento'}
+            content={isTaskUpdated.message}
+            confirmText="Torna alle task"
+            onConfirm={() => {
+              setIsTaskUpdated({ ...isTaskUpdated, success: false, message: '' });
+              navigate('/');
+            }}
+          />
         </>
       );
     } else {
@@ -111,6 +122,7 @@ export default function TaskDetail() {
               navigate('/');
             }}
           />
+
           {/* {isTaskDeleted.success == false && isTaskDeleted.message.length > 0 && (
             <Portal domElement="#root">
               <div id="removeTaskPortalError" className={`${isTaskDeleted.success == false && isTaskDeleted.message.length > 0 ? 'flex' : 'hidden'} fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/40`}>
