@@ -132,7 +132,7 @@ export default function TaskDetail() {
           }}
           onClose={() => toggleModal('modalTaskDetail')}
         />
-        <EditTaskModal id="editTaskModal" show={isModalOpened && activeModalId == 'editTaskModal'} onClose={() => toggleModal('editTaskModal')} onSave={() => {}} />
+        <EditTaskModal task={activeTask} id="editTaskModal" show={isModalOpened && activeModalId == 'editTaskModal'} onClose={() => toggleModal('editTaskModal')} onSave={() => {}} />
       </>
     );
   }
