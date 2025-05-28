@@ -2,13 +2,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useApiContext } from '../context/ApiContext';
 import Modal from '../components/Modal';
 import Portal from '../components/Portal';
+import EditTaskModal from '../components/EditTaskModal';
 
 export default function TaskDetail() {
   const taskId = parseInt(useParams().id);
 
   const navigate = useNavigate();
 
-  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal } = useApiContext();
+  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal, activeModalId } = useApiContext();
   const activeTask = tasks.find((task) => task.id == taskId);
 
   if (!isModalOpened) {
@@ -39,9 +40,12 @@ export default function TaskDetail() {
                   <span className="text-lg font-semibold">{status}</span>
                 </div>
               </div>
-              <div>
-                <button onClick={() => toggleModal()} className="hover:cursor-pointer bg-red-700 text-white rounded-lg px-4 py-2 font-semibold">
+              <div className="flex items-center gap-2">
+                <button onClick={() => toggleModal('modalTaskDetail')} className="hover:cursor-pointer bg-red-700 text-white rounded-lg px-4 py-2 font-semibold">
                   Elimina Task
+                </button>
+                <button onClick={() => toggleModal('editTaskModal')} className="hover:cursor-pointer bg-black text-white rounded-lg px-4 py-2 font-semibold">
+                  Aggiorna Task
                 </button>
               </div>
             </div>
@@ -117,16 +121,19 @@ export default function TaskDetail() {
     }
   } else {
     return (
-      <Modal
-        id="modalTaskDetail"
-        show={isModalOpened}
-        title="Conferma Eliminazione"
-        content="Vuoi davvero eliminare il task?"
-        onConfirm={() => {
-          removeTasks(taskId), toggleModal();
-        }}
-        onClose={() => toggleModal()}
-      />
+      <>
+        <Modal
+          id="modalTaskDetail"
+          show={isModalOpened && activeModalId == 'modalTaskDetail'}
+          title="Conferma Eliminazione"
+          content="Vuoi davvero eliminare il task?"
+          onConfirm={() => {
+            removeTasks(taskId), toggleModal('modalTaskDetail');
+          }}
+          onClose={() => toggleModal('modalTaskDetail')}
+        />
+        <EditTaskModal id="editTaskModal" show={isModalOpened && activeModalId == 'editTaskModal'} onClose={() => toggleModal('editTaskModal')} onSave={() => {}} />
+      </>
     );
   }
 }

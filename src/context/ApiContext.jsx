@@ -7,13 +7,14 @@ const ApiProvider = ({ children }) => {
   const [tasks, isTaskDeleted, addTasks, removeTasks, updateTasks, setTasks, setIsTaskDeleted] = useTasks();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [activeModalId, setActiveModalId] = useState('');
 
-  const toggleModal = () => {
+  const toggleModal = (modalId) => {
+    setActiveModalId(modalId);
     setIsModalOpened(!isModalOpened);
-    console.log('sono nel toggle');
   };
 
-  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks, isModalOpened, toggleModal };
+  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks, activeModalId, isModalOpened, toggleModal };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };
