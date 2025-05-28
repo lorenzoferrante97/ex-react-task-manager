@@ -6,12 +6,16 @@ export default function useFormData() {
   const formDesc = useRef();
   const formStatus = useRef();
 
+  const [editTitle, setEditTitle] = useState('');
+  const [editDesc, setEditDesc] = useState('');
+  const [editStatus, setEditStatus] = useState('');
+
   const [isNewTaskAdded, setIsNewTaskAdded] = useState({
     success: false,
     error: '',
   });
 
-  const { addTasks } = useApiContext();
+  const addTasks = useApiContext();
 
   const handleTitle = (e) => setFormTitle(e.target.value);
 
@@ -45,5 +49,5 @@ export default function useFormData() {
     formStatus.current.value = 'To do';
   };
 
-  return [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded];
+  return [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus];
 }

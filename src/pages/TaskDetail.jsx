@@ -1,16 +1,22 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useApiContext } from '../context/ApiContext';
 import Modal from '../components/Modal';
-import Portal from '../components/Portal';
 import EditTaskModal from '../components/EditTaskModal';
+import { useEffect } from 'react';
 
 export default function TaskDetail() {
   const taskId = parseInt(useParams().id);
 
   const navigate = useNavigate();
 
-  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal, activeModalId } = useApiContext();
+  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal, activeModalId, setEditTitle, setEditDesc, setEditStatus } = useApiContext();
   const activeTask = tasks.find((task) => task.id == taskId);
+
+  useEffect(() => {
+    setEditTitle(activeTask.title);
+    setEditDesc(activeTask.description);
+    setEditStatus(activeTask.status);
+  }, []);
 
   if (!isModalOpened) {
     if (activeTask) {

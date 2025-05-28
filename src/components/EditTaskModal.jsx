@@ -1,20 +1,22 @@
 import { useRef, useState } from 'react';
 import Modal from './Modal';
 import useValidation from '../hooks/useValidation';
+import { useApiContext } from '../context/ApiContext';
 
 export default function EditTaskModal({ id, show, onClose, task, onSave, title = 'Modifica task', confirmText = 'Salva' }) {
   const [validateTitle, errorMessages] = useValidation();
+  const { updateTasks, editTitle, editDesc, editStatus, setEditTitle, setEditDesc, setEditStatus } = useApiContext();
 
   const formRef = useRef();
 
   console.log('activeTask: ', task);
 
-  const [editTitle, setEditTitle] = useState(task.title);
-  const [editDesc, setEditDesc] = useState(task.description);
-  const [editStatus, setEditStatus] = useState(task.status);
+  // const [editTitle, setEditTitle] = useState(task.title);
+  // const [editDesc, setEditDesc] = useState(task.description);
+  // const [editStatus, setEditStatus] = useState(task.status);
 
   const editForm = (
-    <form ref={formRef} className="w-[60vw] flex flex-col gap-4" onSubmit={(e) => {}}>
+    <form ref={formRef} onSubmit={() => onSave()} className="w-[60vw] flex flex-col gap-4">
       <div className="flex flex-col w-full gap-2">
         <label htmlFor="taskTitle">Titolo della Task</label>
         <input
@@ -40,30 +42,21 @@ export default function EditTaskModal({ id, show, onClose, task, onSave, title =
           placeholder="Comprare latte, biscotti..."
         />
       </div>
-      <div className="w-full flex items-end justify-between">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="taskDesc">Seleziona stato Task</label>
-          <select
-            name="taskStatus"
-            value={editStatus}
-            onChange={(e) => setEditStatus(e.target.value)}
-            className="w-fit min-w-60 bg-white rounded-lg min-h-12 px-4 py-1 border border-neutral-200/50 focus-visible:outline-2 focus-visible:outline-neutral-700 shadow-sm shadow-black/5"
-          >
-            <option value="To do">To do</option>
-            <option value="Doing">Doing</option>
-            <option value="Done">Done</option>
-          </select>
-        </div>
-        <button className="bg-black text-white rounded-full px-6 py-4 font-semibold hover:scale-110 transition duration-300 ease-in-out cursor-pointer hover:shadow-xl" type="submit">
-          Salva
-        </button>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="taskDesc">Seleziona stato Task</label>
+        <select name="taskStatus" value={editStatus} onChange={(e) => setEditStatus(e.target.value)} className="w-fit min-w-60 bg-white rounded-lg min-h-12 px-4 py-1 border border-neutral-200/50 focus-visible:outline-2 focus-visible:outline-neutral-700 shadow-sm shadow-black/5">
+          <option value="To do">To do</option>
+          <option value="Doing">Doing</option>
+          <option value="Done">Done</option>
+        </select>
       </div>
     </form>
   );
 
   return (
     <>
-      <Modal id={id} show={show} title={title} content={editForm} confirmText={confirmText} closeText="Annulla" onClose={onClose} />
+      <Modal id={id} show={show} title={title} content={editForm} confirmText={confirmText} closeText="Annulla" onClose={onClose} onConfirm={() => formRef.current?.requestSubmit()} />
     </>
   );
 }
