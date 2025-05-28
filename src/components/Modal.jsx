@@ -1,6 +1,7 @@
 import Portal from './Portal';
+import { memo } from 'react';
 
-export default function Modal({ domElement = '#root', id, title, content, show, onClose, onConfirm, confirmText = 'Conferma', closeText = 'Annulla' }) {
+export default memo(function Modal({ domElement = '#root', id, title, content, show, onClose, onConfirm, confirmText = 'Conferma', closeText = 'Annulla' }) {
   return (
     <>
       <Portal domElement={domElement}>
@@ -24,4 +25,4 @@ export default function Modal({ domElement = '#root', id, title, content, show, 
       </Portal>
     </>
   );
-}
+});
