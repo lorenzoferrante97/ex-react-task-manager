@@ -1,5 +1,4 @@
 import { useApiContext } from '../context/ApiContext';
-import { useEffect } from 'react';
 import List from '../components/List';
 
 export default function TaskList() {

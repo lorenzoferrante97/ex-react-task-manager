@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useCallback } from 'react';
 const ApiContext = createContext();
 import useTasks from '../hooks/useTasks';
 import useFormData from '../hooks/useFormData';
+import useSort from '../hooks/useSort';
 
 const ApiProvider = ({ children }) => {
   // use tasks
@@ -9,6 +10,9 @@ const ApiProvider = ({ children }) => {
 
   // use formdata
   const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus] = useFormData();
+
+  // use sort
+  const { sortBy, sortOrder, changeSort } = useSort();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [activeModalId, setActiveModalId] = useState('');
@@ -18,7 +22,7 @@ const ApiProvider = ({ children }) => {
     setIsModalOpened(!isModalOpened);
   };
 
-  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks, updateTasks, activeModalId, isModalOpened, toggleModal, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus, isTaskUpdated, setIsTaskUpdated };
+  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks, updateTasks, activeModalId, isModalOpened, toggleModal, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus, isTaskUpdated, setIsTaskUpdated, sortBy, sortOrder, changeSort };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };
