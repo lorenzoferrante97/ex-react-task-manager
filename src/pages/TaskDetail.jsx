@@ -9,14 +9,14 @@ export default function TaskDetail() {
 
   const navigate = useNavigate();
 
-  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal, activeModalId, setEditTitle, setEditDesc, setEditStatus } = useApiContext();
+  const { tasks, removeTasks, isTaskDeleted, setIsTaskDeleted, isModalOpened, toggleModal, activeModalId, setEditTitle, setEditDesc, setEditStatus, updateTasks, editTitle, editDesc, editStatus } = useApiContext();
   const activeTask = tasks.find((task) => task.id == taskId);
 
-  useEffect(() => {
-    setEditTitle(activeTask.title);
-    setEditDesc(activeTask.description);
-    setEditStatus(activeTask.status);
-  }, []);
+  // useEffect(() => {
+  //   setEditTitle(activeTask.title);
+  //   setEditDesc(activeTask.description);
+  //   setEditStatus(activeTask.status);
+  // }, []);
 
   if (!isModalOpened) {
     if (activeTask) {
@@ -50,7 +50,15 @@ export default function TaskDetail() {
                 <button onClick={() => toggleModal('modalTaskDetail')} className="hover:cursor-pointer bg-red-700 text-white rounded-lg px-4 py-2 font-semibold">
                   Elimina Task
                 </button>
-                <button onClick={() => toggleModal('editTaskModal')} className="hover:cursor-pointer bg-black text-white rounded-lg px-4 py-2 font-semibold">
+                <button
+                  onClick={() => {
+                    setEditTitle(activeTask.title);
+                    setEditDesc(activeTask.description);
+                    setEditStatus(activeTask.status);
+                    toggleModal('editTaskModal');
+                  }}
+                  className="hover:cursor-pointer bg-black text-white rounded-lg px-4 py-2 font-semibold"
+                >
                   Aggiorna Task
                 </button>
               </div>
@@ -138,7 +146,24 @@ export default function TaskDetail() {
           }}
           onClose={() => toggleModal('modalTaskDetail')}
         />
-        <EditTaskModal task={activeTask} id="editTaskModal" show={isModalOpened && activeModalId == 'editTaskModal'} onClose={() => toggleModal('editTaskModal')} onSave={() => {}} />
+        <EditTaskModal
+          task={activeTask}
+          id="editTaskModal"
+          show={isModalOpened && activeModalId == 'editTaskModal'}
+          onClose={() => toggleModal('editTaskModal')}
+          onSave={(e) => {
+            e.preventDefault();
+            updateTasks(
+              {
+                editTitle,
+                editDesc,
+                editStatus,
+              },
+              taskId
+            ),
+              toggleModal('editTaskModal');
+          }}
+        />
       </>
     );
   }

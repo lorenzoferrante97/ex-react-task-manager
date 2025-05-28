@@ -85,15 +85,18 @@ export default function useTasks() {
   };
 
   // update tasks
-  const updateTasks = async (updatedTask) => {
-    const { taskId } = updateTasks;
+  const updateTasks = async (updatedTask, taskId) => {
+    console.log('updatedTask: ', updatedTask);
+    console.log('taskId: ', taskId);
+
+    const { editTitle, editDesc, editStatus } = updatedTask;
 
     const fetchTask = await fetch(`${fetchPath}/tasks/${taskId}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updateTasks),
+      body: JSON.stringify({ title: editTitle, description: editDesc, status: editStatus, id: taskId, createdAt: new Date() }),
     });
 
     const fetchedTask = await fetchTask.json();
@@ -102,12 +105,14 @@ export default function useTasks() {
 
     switch (fetchedTask.success) {
       case true:
+        console.log('sono nell update task - success true');
         tempTasks = tempTasks.filter((task) => task.id != fetchedTask.task.id);
         setTasks([...tempTasks, fetchedTask.task]);
         setIsTaskUpdated({ ...isTaskUpdated, success: true, message: 'Task aggiornato correttamente' });
         break;
 
       case false:
+        console.log('sono nell update task - success false');
         setIsTaskUpdated({ ...isTaskUpdated, success: false, message: fetchedTask.message });
         throw new Error(fetchedTask.message);
     }

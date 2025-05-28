@@ -5,18 +5,16 @@ import { useApiContext } from '../context/ApiContext';
 
 export default function EditTaskModal({ id, show, onClose, task, onSave, title = 'Modifica task', confirmText = 'Salva' }) {
   const [validateTitle, errorMessages] = useValidation();
-  const { updateTasks, editTitle, editDesc, editStatus, setEditTitle, setEditDesc, setEditStatus } = useApiContext();
+  const { editTitle, editDesc, editStatus, setEditTitle, setEditDesc, setEditStatus } = useApiContext();
 
   const formRef = useRef();
-
-  console.log('activeTask: ', task);
 
   // const [editTitle, setEditTitle] = useState(task.title);
   // const [editDesc, setEditDesc] = useState(task.description);
   // const [editStatus, setEditStatus] = useState(task.status);
 
   const editForm = (
-    <form ref={formRef} onSubmit={() => onSave()} className="w-[60vw] flex flex-col gap-4">
+    <form ref={formRef} onSubmit={onSave} className="w-[60vw] flex flex-col gap-4">
       <div className="flex flex-col w-full gap-2">
         <label htmlFor="taskTitle">Titolo della Task</label>
         <input
