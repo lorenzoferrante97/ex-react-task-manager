@@ -23,6 +23,22 @@ export default function useSort(tasks) {
       } else {
         tasks.sort((task2, task1) => mainOrder[task1.status] - mainOrder[task2.status]);
       }
+    } else if (sortBy == 'createdAt') {
+      if (sortOrder == 1) {
+        tasks.sort((task2, task1) => {
+          const t2Date = new Date(task2.createdAt);
+          const t1Date = new Date(task1.createdAt);
+
+          return t2Date.getTime() - t1Date.getTime();
+        });
+      } else {
+        tasks.sort((task2, task1) => {
+          const t2Date = new Date(task2.createdAt);
+          const t1Date = new Date(task1.createdAt);
+
+          return t1Date.getTime() - t2Date.getTime();
+        });
+      }
     }
 
     return tasks;
