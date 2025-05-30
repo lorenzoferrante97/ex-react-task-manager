@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
 export default function useSort(tasks) {
   const [sortBy, setSortBy] = useState('createdAt');
@@ -44,9 +44,12 @@ export default function useSort(tasks) {
     return tasks;
   }, [tasks, sortBy, sortOrder]);
 
-  const changeSort = (col) => {
-    col == sortBy ? (sortOrder == 1 ? setSortOrder(-1) : setSortOrder(1)) : (setSortBy(col), setSortOrder(1));
-  };
+  const changeSort = useCallback(
+    (col) => {
+      col == sortBy ? (sortOrder == 1 ? setSortOrder(-1) : setSortOrder(1)) : (setSortBy(col), setSortOrder(1));
+    },
+    [sortBy, sortOrder]
+  );
 
   return { sortBy, sortOrder, sortTasks, changeSort };
 }
