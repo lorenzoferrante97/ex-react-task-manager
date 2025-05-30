@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import TaskRow from './TaskRow';
+import useSort from '../hooks/useSort';
 
 import { useApiContext } from '../context/ApiContext';
 
 export default memo(function List({ tasks }) {
   const { sortBy, sortOrder, changeSort } = useApiContext();
-
-  console.log('sortBy: ', sortBy);
-  console.log('sortOrder: ', sortOrder);
+  const { sortTasks } = useSort(tasks);
 
   return (
     <>
@@ -24,7 +23,7 @@ export default memo(function List({ tasks }) {
             Data Creazione
           </div>
         </div>
-        {tasks?.map((task) => {
+        {sortTasks?.map((task) => {
           const { id } = task;
 
           return <TaskRow key={id} task={task} />;

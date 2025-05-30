@@ -12,7 +12,7 @@ const ApiProvider = ({ children }) => {
   const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus] = useFormData();
 
   // use sort
-  const { sortBy, sortOrder, changeSort } = useSort();
+  const { sortBy, sortOrder, changeSort } = useSort(tasks);
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [activeModalId, setActiveModalId] = useState('');
