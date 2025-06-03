@@ -5,8 +5,26 @@ export default function useSort(tasks) {
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState(1);
 
+  function debounce(callback, delay) {
+    let timer;
+
+    return (value) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        callback(value);
+      }, delay);
+    };
+  }
+
   const [searchQuery, setSearchQuery] = useState('');
-  const handleSearch = (e) => setSearchQuery(e.target.value);
+  // const handleSearch = (e) => setSearchQuery(e.target.value);
+
+  const handleSearch = useCallback(
+    debounce((e) => {
+      setSearchQuery(e.target.value);
+    }, 400),
+    []
+  );
 
   const sortTasks = useMemo(() => {
     let filteredTasks = [...tasks];

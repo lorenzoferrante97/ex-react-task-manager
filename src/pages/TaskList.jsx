@@ -22,7 +22,6 @@ export default function TaskList() {
           onChange={(e) => {
             handleSearch(e);
           }}
-          value={searchQuery}
         />
       </div>
       {sortTasks?.length != 0 ? <List tasks={sortTasks} changeSort={changeSort} /> : <p>No Tasks</p>}
