@@ -1,15 +1,26 @@
 import { useState, useMemo, useCallback } from 'react';
+import useFormData from './useFormData';
 
 export default function useSort(tasks) {
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState(1);
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const handleSearch = (e) => setSearchQuery(e.target.value);
+
   const sortTasks = useMemo(() => {
+    let filteredTasks = [...tasks];
+
+    if (searchQuery.trim().length > 0) {
+      filteredTasks = filteredTasks.filter((task) => task.title.toLowerCase().includes(searchQuery.trim().toLowerCase()));
+      // return filteredTasks;
+    }
+
     if (sortBy == 'title') {
       if (sortOrder == 1) {
-        tasks.sort((task2, task1) => task2.title.localeCompare(task1.title));
+        filteredTasks.sort((task2, task1) => task2.title.localeCompare(task1.title));
       } else {
-        tasks.sort((task2, task1) => task1.title.localeCompare(task2.title));
+        filteredTasks.sort((task2, task1) => task1.title.localeCompare(task2.title));
       }
     } else if (sortBy == 'status') {
       const mainOrder = {
@@ -19,20 +30,20 @@ export default function useSort(tasks) {
       };
 
       if (sortOrder == 1) {
-        tasks.sort((task2, task1) => mainOrder[task2.status] - mainOrder[task1.status]);
+        filteredTasks.sort((task2, task1) => mainOrder[task2.status] - mainOrder[task1.status]);
       } else {
-        tasks.sort((task2, task1) => mainOrder[task1.status] - mainOrder[task2.status]);
+        filteredTasks.sort((task2, task1) => mainOrder[task1.status] - mainOrder[task2.status]);
       }
     } else if (sortBy == 'createdAt') {
       if (sortOrder == 1) {
-        tasks.sort((task2, task1) => {
+        filteredTasks.sort((task2, task1) => {
           const t2Date = new Date(task2.createdAt);
           const t1Date = new Date(task1.createdAt);
 
           return t2Date.getTime() - t1Date.getTime();
         });
       } else {
-        tasks.sort((task2, task1) => {
+        filteredTasks.sort((task2, task1) => {
           const t2Date = new Date(task2.createdAt);
           const t1Date = new Date(task1.createdAt);
 
@@ -41,8 +52,8 @@ export default function useSort(tasks) {
       }
     }
 
-    return tasks;
-  }, [tasks, sortBy, sortOrder]);
+    return filteredTasks;
+  }, [tasks, sortBy, sortOrder, searchQuery]);
 
   const changeSort = useCallback(
     (col) => {
@@ -51,5 +62,5 @@ export default function useSort(tasks) {
     [sortBy, sortOrder]
   );
 
-  return { sortBy, sortOrder, sortTasks, changeSort };
+  return { sortBy, sortOrder, sortTasks, changeSort, searchQuery, handleSearch };
 }

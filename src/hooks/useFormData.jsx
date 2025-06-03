@@ -1,7 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useApiContext } from '../context/ApiContext';
+import useTasks from './useTasks';
 
 export default function useFormData() {
+  const addTasks = useApiContext();
+
+  const [tasks, isTaskDeleted, isTaskUpdated, _, removeTasks, updateTasks, setTasks, setIsTaskDeleted, setIsTaskUpdated] = useTasks();
+
   const [formTitle, setFormTitle] = useState('');
   const formDesc = useRef();
   const formStatus = useRef();
@@ -14,8 +19,6 @@ export default function useFormData() {
     success: false,
     error: '',
   });
-
-  const addTasks = useApiContext();
 
   const handleTitle = (e) => setFormTitle(e.target.value);
 

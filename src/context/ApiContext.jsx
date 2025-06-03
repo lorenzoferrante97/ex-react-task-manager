@@ -12,7 +12,7 @@ const ApiProvider = ({ children }) => {
   const [formTitle, formDesc, formStatus, isNewTaskAdded, handleTitle, handleSubmit, resetForm, setIsNewTaskAdded, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus] = useFormData();
 
   // use sort
-  const { sortBy, sortOrder, changeSort } = useSort(tasks);
+  const { sortBy, sortOrder, changeSort, searchQuery, handleSearch } = useSort(tasks);
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [activeModalId, setActiveModalId] = useState('');
@@ -22,7 +22,31 @@ const ApiProvider = ({ children }) => {
     setIsModalOpened(!isModalOpened);
   };
 
-  const value = { tasks, isTaskDeleted, addTasks, setIsTaskDeleted, removeTasks, updateTasks, activeModalId, isModalOpened, toggleModal, setEditTitle, setEditDesc, setEditStatus, editTitle, editDesc, editStatus, isTaskUpdated, setIsTaskUpdated, sortBy, sortOrder, changeSort };
+  const value = {
+    tasks,
+    isTaskDeleted,
+    addTasks,
+    setIsTaskDeleted,
+    removeTasks,
+    updateTasks,
+    activeModalId,
+    isModalOpened,
+    toggleModal,
+    setEditTitle,
+    setEditDesc,
+    setEditStatus,
+    editTitle,
+    editDesc,
+    editStatus,
+    isTaskUpdated,
+    setIsTaskUpdated,
+    sortBy,
+    sortOrder,
+    changeSort,
+    handleSearch,
+    setTasks,
+    searchQuery,
+  };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };
